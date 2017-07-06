@@ -25,7 +25,10 @@ export const getCompetition = params => dispatch => {
     const url = `${apiURL}competitions${getQuery(params)}`;
     return fetch(url, { headers })
         .then(response => response.json())
-        .then(response => dispatch(fetchLeagueSuccess(response)))
+        .then(response => {
+            if (response.error) dispatch(fetchLeagueError(response.error));
+            else dispatch(fetchLeagueSuccess(response));
+        })
         .catch(error => dispatch(fetchLeagueError(error)));
 };
 
@@ -38,7 +41,10 @@ export const getAllTeamsFromLeague = id => dispatch => {
     const url = `${apiURL}competitions/${id}/teams`;
     return fetch(url, { headers })
         .then(response => response.json())
-        .then(response => dispatch(fetchTeamsSuccess(response)))
+        .then(response => {
+            if (response.error) dispatch(fetchTeamsError(response.error));
+            else dispatch(fetchTeamsSuccess(response));
+        })
         .catch(error => dispatch(fetchTeamsError(error)));
 };
 

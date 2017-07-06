@@ -24,14 +24,7 @@ class App extends Component {
         });
     };
     render() {
-        const {
-            isHome,
-            goHome,
-            isHeroes,
-            goHeroes,
-            isSorting,
-            goSorting,
-        } = this.props;
+        const { isHome, goHome } = this.props;
         return (
             <div className="app-container">
                 <Container>

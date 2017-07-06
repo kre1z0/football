@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 import withRouter from '../../hoc/withRouter';
 import { getCompetition } from '../../ducks/api';
+import League from '../../components/league';
+
+import './home.scss';
 
 class Home extends Component {
     state = {
@@ -16,27 +19,22 @@ class Home extends Component {
     }
 
     render() {
-        const { league, goTeams } = this.props;
+        const { league, goTeams, loading } = this.props;
         return (
             <div>
-                {league.map(({ caption, id, league }) => {
-                    return (
-                        <div key={id} onTouchTap={() => goTeams(id, league)}>
-                            {caption}
-                        </div>
-                    );
-                })}
+                <League loading={loading} league={league} goTeams={goTeams} />
             </div>
         );
     }
 }
 
-const mapProps = ({ api: { league } }) => ({
+const mapProps = ({ api: { league, loading } }) => ({
     league,
+    loading,
 });
 
 const mapActions = {
     getCompetition,
 };
 
-export default withRouter(connect(mapProps, mapActions)(Home));
+export default connect(mapProps, mapActions)(withRouter(Home));

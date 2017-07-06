@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import withRouter from '../../hoc/withRouter';
+import withError from '../../hoc/withError';
 import { getAllTeamsFromLeague } from '../../ducks/api';
 
 class Teams extends Component {
@@ -21,7 +21,6 @@ class Teams extends Component {
 
     render() {
         const { teams } = this.state;
-        console.log('this.state', this.props.teams.teams);
         return (
             <div>
                 {teams &&
@@ -37,11 +36,12 @@ class Teams extends Component {
     }
 }
 
-const mapProps = ({ api: { teams } }, { match: { params } }) => {
+const mapProps = ({ api: { teams, error } }, { match: { params } }) => {
     const leagueId = params.id && params.id.split('-')[0];
     return {
-        leagueId: leagueId,
         teams,
+        leagueId: leagueId,
+        error,
     };
 };
 
@@ -49,4 +49,4 @@ const mapActions = {
     getAllTeamsFromLeague,
 };
 
-export default withRouter(connect(mapProps, mapActions)(Teams));
+export default connect(mapProps, mapActions)(withError(Teams));
