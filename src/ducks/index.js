@@ -1,15 +1,12 @@
 import { combineReducers } from 'redux-immutable';
 import { Record } from 'immutable';
 
-import test from './test';
-import youtube from './youtube';
+import api from './api';
 
 export const StateRecord = new Record({
-    test: undefined,
-    youtube: undefined,
+    api: undefined,
 });
 
 export default combineReducers({
-    test,
-    youtube,
+    api,
 });

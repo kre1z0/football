@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import api from '../../api';
+
+import withRouter from '../../hoc/withRouter';
+import { getCompetition } from '../../ducks/api';
 
 class Home extends Component {
+    state = {
+        season: 2017,
+    };
+
     componentDidMount() {
-        api
-            .getAllTeam(445)
-            .then(result => {
-                console.log('result', result);
-            })
-            .catch(error => {
-                console.log('error', error);
-            });
+        const { season } = this.state;
+        const { getCompetition } = this.props;
+        getCompetition && getCompetition(season);
     }
 
     render() {
-        return <div className="lol">ghfghfghfghfghfghf</div>;
+        const { league, goTeams } = this.props;
+        return (
+            <div>
+                {league.map(({ caption, id, league }) => {
+                    return (
+                        <div key={id} onTouchTap={() => goTeams(id, league)}>
+                            {caption}
+                        </div>
+                    );
+                })}
+            </div>
+        );
     }
 }
 
-const mapProps = () => ({});
+const mapProps = ({ api: { league } }) => ({
+    league,
+});
 
-const mapActions = {};
+const mapActions = {
+    getCompetition,
+};
 
-export default connect(mapProps, mapActions)(Home);
+export default withRouter(connect(mapProps, mapActions)(Home));

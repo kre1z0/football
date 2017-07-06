@@ -1,62 +1,43 @@
-const apiURL = 'http://api.football-data.org/v1/';
+export const apiURL = 'http://api.football-data.org/v1/';
 
 const apiToken = 'f5a4c94efb8e4afa906ded67d4c75797';
 
-function parseJSON(response) {
-    return response.json();
-}
+export const headers = {
+    'X-Auth-Token': apiToken,
+};
 
-function getHeaders() {
-    return {
-        'X-Auth-Token': apiToken,
-    };
-}
-
-function getQuery(options) {
+export function getQuery(options = {}) {
+    options = JSON.parse(JSON.stringify(options));
     const esc = encodeURIComponent;
     const query = Object.keys(options)
-        .map(k => '/?' + esc(k) + '=' + esc(options[k]))
+        .map(k => esc(k) + '=' + esc(options[k]))
         .join('&');
-    return query;
+    if (query === '') return '';
+    return '/?' + query;
 }
 
-function request(url, options) {
-    const endpoint = apiURL + url;
-    const headers = getHeaders();
-    const advancedOptions = { ...options, headers };
-
-    return new Promise((resolve, reject) => {
-        fetch(endpoint, advancedOptions).then(response => {
-            if (response.ok) {
-                parseJSON(response).then(response => resolve(response));
-            } else {
-                parseJSON(response).then(response => reject(response));
-            }
-        });
-    });
-}
-
-export default {
-    //  ➡  season=/\d\d\d\d/ year
-    getCompetition(year = '') {
-        const params = {
-            season: year,
-        };
-        const url = `competitions${params && getQuery(params)}`;
-        return request(url);
-    },
-    //  ➡  league id
-    getAllTeam(id = '') {
-        const url = `competitions/${id}/teams`;
-        return request(url);
-    },
-    //  ➡  matchday=/\d+/
-    getLeagueTable(id = '', day = '') {
-        const params = {
-            matchday: day,
-        };
-        const url = `competitions/${id}/leagueTable${params &&
-            getQuery(params)}`;
-        return request(url);
-    },
-};
+//export default {
+//    // ➡ league id
+//    getAllTeam(id = '') {
+//        const url = `competitions/${id}/teams`;
+//        return request(url);
+//    },
+//    // ➡ league id / matchday=/\d+/
+//    getLeagueTable(id = '', params) {
+//        const url = `competitions/${id}/leagueTable${getQuery(params)}`;
+//        return request(url);
+//    },
+//    // ➡ league id timeFrame=/p|n[1-9]{1,2} matchday=/\d+/
+//    getListAllFixtures(id, params) {
+//        const url = `competitions/${id}/fixtures${getQuery(params)}`;
+//        return request(url);
+//    },
+//    getTeam(id = '') {
+//        const url = `teams/${id}`;
+//        return request(url);
+//    },
+//    getTeamPayers(id = '') {
+//        const url = `teams/${id}/players`;
+//        return request(url);
+//    },
+//};

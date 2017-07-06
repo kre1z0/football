@@ -49,22 +49,6 @@ class App extends Component {
                                                 goHome
                                             </NavLink>
                                         </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                active={isHeroes()}
-                                                onTouchTap={goHeroes}
-                                            >
-                                                heroes
-                                            </NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink
-                                                active={isSorting()}
-                                                onTouchTap={goSorting}
-                                            >
-                                                sorting
-                                            </NavLink>
-                                        </NavItem>
                                     </Nav>
                                 </Collapse>
                             </Navbar>
