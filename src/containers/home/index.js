@@ -9,20 +9,24 @@ import './home.scss';
 
 class Home extends Component {
     state = {
-        season: 2017,
+        season: 2016,
     };
 
     componentDidMount() {
         const { season } = this.state;
         const { getCompetition } = this.props;
-        getCompetition && getCompetition(season);
+        getCompetition && getCompetition({ season: season });
     }
 
     render() {
-        const { league, goTeams, loading } = this.props;
+        const { league, goTeams, loading, goLeagueTable } = this.props;
         return (
             <div>
-                <League loading={loading} league={league} goTeams={goTeams} />
+                <League
+                    loading={loading}
+                    league={league}
+                    goLeagueTable={goLeagueTable}
+                />
             </div>
         );
     }

@@ -11,12 +11,16 @@ export default function(EnhancedComponent) {
         goTeams = (id = '', league) =>
             this.props.history.push(`/teams/${id}-${league}`);
 
+        goLeagueTable = (id = '', league) =>
+            this.props.history.push(`/league/${id}-${league}`);
+
         render() {
             return (
                 <EnhancedComponent
                     isHome={this.isHome}
                     goHome={this.goHome}
                     goTeams={this.goTeams}
+                    goLeagueTable={this.goLeagueTable}
                     {...this.state}
                     {...this.props}
                 />

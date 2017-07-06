@@ -5,6 +5,7 @@ import { Record } from 'immutable';
 const apiState = Record({
     league: undefined,
     teams: undefined,
+    leagueTable: undefined,
     error: undefined,
     loading: undefined,
 });
@@ -12,6 +13,7 @@ const apiState = Record({
 const initState = new apiState({
     league: [],
     teams: {},
+    leagueTable: {},
     error: false,
     loading: false,
 });
@@ -20,7 +22,7 @@ const fetchLeagueStart = createAction('api/fetch-league-start');
 const fetchLeagueSuccess = createAction('api/fetch-league-success');
 const fetchLeagueError = createAction('api/fetch-league-error');
 
-export const getCompetition = params => dispatch => {
+export const getCompetition = (params = {}) => dispatch => {
     dispatch(fetchLeagueStart());
     const url = `${apiURL}competitions${getQuery(params)}`;
     return fetch(url, { headers })
@@ -48,6 +50,22 @@ export const getAllTeamsFromLeague = id => dispatch => {
         .catch(error => dispatch(fetchTeamsError(error)));
 };
 
+const fetchLeagueTableStart = createAction('api/fetch-league-table-start');
+const fetchLeagueTableSuccess = createAction('api/fetch-league-table-success');
+const fetchLeagueTableError = createAction('api/fetch-league-table-error');
+
+export const getTableFromLeague = (id, params) => dispatch => {
+    dispatch(fetchLeagueTableStart());
+    const url = `${apiURL}competitions/${id}/leagueTable${getQuery(params)}`;
+    return fetch(url, { headers })
+        .then(response => response.json())
+        .then(response => {
+            if (response.error) dispatch(fetchLeagueTableError(response.error));
+            else dispatch(fetchLeagueTableSuccess(response));
+        })
+        .catch(error => dispatch(fetchLeagueTableError(error)));
+};
+
 export default createReducer(
     {
         [fetchLeagueStart]: (state, payload) => state.set('loading', true),
@@ -65,6 +83,15 @@ export default createReducer(
                 .set('error', false)
                 .set('teams', payload),
         [fetchTeamsError]: (state, payload) => state.set('error', payload),
+
+        [fetchLeagueTableStart]: (state, payload) => state.set('loading', true),
+        [fetchLeagueTableSuccess]: (state, payload) =>
+            state
+                .set('loading', false)
+                .set('error', false)
+                .set('leagueTable', payload),
+        [fetchLeagueTableError]: (state, payload) =>
+            state.set('error', payload),
     },
     initState,
 );

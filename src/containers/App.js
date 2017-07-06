@@ -29,7 +29,7 @@ class App extends Component {
             <div className="app-container">
                 <Container>
                     <Row>
-                        <Col className="clearfix" lg="12">
+                        <Col md="12">
                             <Navbar color="faded" light toggleable>
                                 <NavbarToggler onClick={this.toggle} />
                                 <Collapse isOpen={this.state.isOpen} navbar>
@@ -48,7 +48,7 @@ class App extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="12">
+                        <Col md="12">
                             {this.props.children}
                         </Col>
                     </Row>

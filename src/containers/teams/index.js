@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Avatar from 'material-ui/Avatar';
 
 import withError from '../../hoc/withError';
 import { getAllTeamsFromLeague } from '../../ducks/api';
@@ -24,9 +25,10 @@ class Teams extends Component {
         return (
             <div>
                 {teams &&
-                    teams.map(({ name }) => {
+                    teams.map(({ name, crestUrl }) => {
                         return (
                             <div key={name}>
+                                <Avatar src={crestUrl} />
                                 {name}
                             </div>
                         );

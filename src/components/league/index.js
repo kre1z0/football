@@ -3,12 +3,16 @@ import withLoader from '../../hoc/withLoader';
 
 class League extends Component {
     render() {
-        const { league, goTeams } = this.props;
+        const { league, goLeagueTable } = this.props;
         return (
             <div>
-                {league.map(({ caption, id, league }) => {
+                {league.map(({ caption, id, league }, index) => {
                     return (
-                        <div key={id} onTouchTap={() => goTeams(id, league)}>
+                        <div
+                            key={id}
+                            onTouchTap={() => goLeagueTable(id, league)}
+                        >
+                            {index + 1}
                             {caption}
                         </div>
                     );
