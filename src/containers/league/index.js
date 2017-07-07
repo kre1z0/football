@@ -7,15 +7,17 @@ import LeagueTable from '../../components/league-table/';
 
 class League extends Component {
     componentDidMount() {
-        const { getTableFromLeague, leagueId } = this.props;
-        getTableFromLeague && getTableFromLeague(leagueId);
+        const { getTableFromLeague, leagueId, matchDay } = this.props;
+        getTableFromLeague &&
+            getTableFromLeague(leagueId, { matchday: matchDay });
     }
 
     render() {
         const { leagueTable: { standing }, loading } = this.props;
+        console.log('standing', standing);
         return (
             <div>
-                <LeagueTable loading={loading} teams={standing} />
+                {standing && <LeagueTable loading={loading} teams={standing} />}
             </div>
         );
     }
@@ -26,10 +28,12 @@ const mapProps = (
     { match: { params } },
 ) => {
     const leagueId = params.leagueId && params.leagueId.split('-')[0];
+    const matchDay = params.leagueId && params.leagueId.split('-')[2];
     return {
         loading,
         leagueTable,
-        leagueId: leagueId,
+        leagueId,
+        matchDay,
         error,
     };
 };

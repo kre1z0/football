@@ -6,17 +6,24 @@ class League extends Component {
         const { league, goLeagueTable } = this.props;
         return (
             <div>
-                {league.map(({ caption, id, league }, index) => {
-                    return (
-                        <div
-                            key={id}
-                            onTouchTap={() => goLeagueTable(id, league)}
-                        >
-                            {index + 1}
-                            {caption}
-                        </div>
-                    );
-                })}
+                {league.map(
+                    ({ caption, id, league, numberOfMatchdays }, index) => {
+                        return (
+                            <div
+                                key={id}
+                                onTouchTap={() =>
+                                    goLeagueTable(
+                                        id,
+                                        league,
+                                        numberOfMatchdays,
+                                    )}
+                            >
+                                {index + 1}
+                                {caption}
+                            </div>
+                        );
+                    },
+                )}
             </div>
         );
     }

@@ -1,14 +1,31 @@
 import React from 'react';
-
 import styles from './team-item.scss';
 
-const TeamItem = ({ name, logo }) =>
-    <tr>
-        <td className={styles.teamEmblemTd}>
-            <img className={styles.teamEmblemImg} src={logo} alt={name} />
+const TeamItem = ({ position, logo, club, played, won, drawn, lost, points }) =>
+    <tr className={styles.teamRow}>
+        <td>
+            {position}
         </td>
         <td>
-            {name}
+            <div className={styles.teamEmblemBlock}>
+                <img className={styles.teamEmblemImg} src={logo} alt={club} />
+            </div>
+            {club}
+        </td>
+        <td>
+            {played}
+        </td>
+        <td>
+            {won}
+        </td>
+        <td>
+            {drawn}
+        </td>
+        <td>
+            {lost}
+        </td>
+        <td>
+            {points}
         </td>
     </tr>;
 

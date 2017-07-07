@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from 'material-ui/CircularProgress';
+import { indigo900 } from 'material-ui/styles/colors';
 
 const innerStyle = {
     width: '100%',
@@ -20,7 +21,7 @@ export default function(EnhancedComponent) {
             return !loading
                 ? <EnhancedComponent {...this.state} {...this.props} />
                 : <Loader
-                      color="red"
+                      color={indigo900}
                       thickness={15}
                       size={150}
                       innerStyle={innerStyle}

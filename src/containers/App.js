@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { indigo900, indigo500 } from 'material-ui/styles/colors';
+import SvgIcon from 'material-ui/SvgIcon';
 import { connect } from 'react-redux';
 import {
     Container,
@@ -13,6 +15,19 @@ import {
 } from 'reactstrap';
 
 import withRouter from '../hoc/withRouter';
+
+import styles from './app.scss';
+
+const iconStyles = {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+};
+
+const HomeIcon = props =>
+    <SvgIcon {...props}>
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>;
 
 class App extends Component {
     state = {
@@ -30,25 +45,31 @@ class App extends Component {
                 <Container>
                     <Row>
                         <Col md="12">
-                            <Navbar color="faded" light toggleable>
+                            <Navbar
+                                className={styles.navBar}
+                                color="faded"
+                                light
+                                toggleable
+                            >
                                 <NavbarToggler onClick={this.toggle} />
                                 <Collapse isOpen={this.state.isOpen} navbar>
                                     <Nav navbar>
                                         <NavItem>
                                             <NavLink
+                                                className={styles.homeLink}
                                                 active={isHome()}
                                                 onTouchTap={goHome}
                                             >
-                                                goHome
+                                                <HomeIcon
+                                                    style={iconStyles}
+                                                    color={indigo900}
+                                                    hoverColor={indigo500}
+                                                />
                                             </NavLink>
                                         </NavItem>
                                     </Nav>
                                 </Collapse>
                             </Navbar>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="12">
                             {this.props.children}
                         </Col>
                     </Row>

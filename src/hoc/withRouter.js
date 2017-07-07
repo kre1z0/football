@@ -11,8 +11,8 @@ export default function(EnhancedComponent) {
         goTeams = (id = '', league) =>
             this.props.history.push(`/teams/${id}-${league}`);
 
-        goLeagueTable = (id = '', league) =>
-            this.props.history.push(`/league/${id}-${league}`);
+        goLeagueTable = (id = '', league, matchday = {}) =>
+            this.props.history.push(`/league/${id}-${league}-${matchday}`);
 
         render() {
             return (
