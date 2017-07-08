@@ -1,42 +1,17 @@
 import React, { Component } from 'react';
 
 import TeamItem from './team-item';
-import Header from './header';
-import HiddenHeader from './hidden-header';
+import HiddenHeader from '../../components/league-table/hidden-header';
 
 import styles from './league-table.scss';
 
-const header = ['Position', 'Club', 'Played', 'Won', 'Drawn', 'Lost', 'Points'];
-
-class LeagueTable extends Component {
-    state = {
-        columnsWidth: {},
-    };
-    onRef = (ref, columnIndex) => {
-        if (
-            this._columnsWidth[columnIndex] === ref.offsetWidth ||
-            ref.offsetWidth === 0
-        )
-            return;
-
-        this._columnsWidth[columnIndex] = ref.offsetWidth;
-
-        if (Object.keys(this._columnsWidth).length === header.length) {
-            this.setState(state => ({
-                columnsWidth: this._columnsWidth,
-            }));
-        }
-    };
-    _columnsWidth = {};
+class Body extends Component {
     render() {
-        const { teams } = this.props;
-        const { columnsWidth } = this.state;
-        console.log('columnsWidth', columnsWidth);
+        const { teams, header, onRef } = this.props;
         return (
-            <div>
-                <Header header={header} columnsWidth={columnsWidth} />
+            <div className={styles.leagueGrid}>
                 <table className={styles.leagueTable}>
-                    <HiddenHeader header={header} onRef={this.onRef} />
+                    <HiddenHeader header={header} onRef={onRef} />
                     <tbody>
                         {teams &&
                             teams.map(
@@ -49,21 +24,18 @@ class LeagueTable extends Component {
                                     points,
                                     losses,
                                     playedGames,
-                                }) => {
-                                    return (
-                                        <TeamItem
-                                            key={teamName}
-                                            position={position}
-                                            logo={crestURI}
-                                            club={teamName}
-                                            played={playedGames}
-                                            won={wins}
-                                            drawn={draws}
-                                            lost={losses}
-                                            points={points}
-                                        />
-                                    );
-                                },
+                                }) =>
+                                    <TeamItem
+                                        key={teamName}
+                                        position={position}
+                                        logo={crestURI}
+                                        club={teamName}
+                                        played={playedGames}
+                                        won={wins}
+                                        drawn={draws}
+                                        lost={losses}
+                                        points={points}
+                                    />,
                             )}
                     </tbody>
                 </table>
@@ -72,4 +44,4 @@ class LeagueTable extends Component {
     }
 }
 
-export default LeagueTable;
+export default Body;

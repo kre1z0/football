@@ -19,12 +19,15 @@
   body,
   #root,
   .app-container {
-    background-color: #ebebeb;
-    color: #000;
+    height: 100%;
+    overflow: hidden;
   }
 
-  .pages-container {
-
+  .app-container {
+    background-color: #ebebeb;
+    color: #000;
+    overflow: auto;
+    padding-bottom: 15px;
   }
 
   .--padding {

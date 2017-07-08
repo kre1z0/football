@@ -1,7 +1,9 @@
-.headerRow {
-  :global {
-    th {
-      padding: 5px 15px;
-    }
-  }
+.headerCell {
+  padding: 15px 15px 5px 15px;
+}
+
+.tableWrapper {
+  position: relative;
+  width: 100%;
+  border-bottom: 2px solid rgba(26, 35, 126, 0.5);
 }

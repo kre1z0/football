@@ -2,18 +2,9 @@ import React, { Component } from 'react';
 import { indigo900, indigo500 } from 'material-ui/styles/colors';
 import SvgIcon from 'material-ui/SvgIcon';
 import { connect } from 'react-redux';
-import {
-    Container,
-    Row,
-    Col,
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    Nav,
-    NavItem,
-    NavLink,
-} from 'reactstrap';
+import { Container, Row, Col, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 
+import Block from '../components/block';
 import withRouter from '../hoc/withRouter';
 
 import styles from './app.scss';
@@ -21,7 +12,6 @@ import styles from './app.scss';
 const iconStyles = {
     width: 50,
     height: 50,
-    marginRight: 10,
 };
 
 const HomeIcon = props =>
@@ -42,34 +32,19 @@ class App extends Component {
         const { isHome, goHome } = this.props;
         return (
             <div className="app-container">
-                <Container>
-                    <Row>
-                        <Col md="12">
-                            <Navbar
-                                className={styles.navBar}
-                                color="faded"
-                                light
-                                toggleable
-                            >
-                                <NavbarToggler onClick={this.toggle} />
-                                <Collapse isOpen={this.state.isOpen} navbar>
-                                    <Nav navbar>
-                                        <NavItem>
-                                            <NavLink
-                                                className={styles.homeLink}
-                                                active={isHome()}
-                                                onTouchTap={goHome}
-                                            >
-                                                <HomeIcon
-                                                    style={iconStyles}
-                                                    color={indigo900}
-                                                    hoverColor={indigo500}
-                                                />
-                                            </NavLink>
-                                        </NavItem>
-                                    </Nav>
-                                </Collapse>
-                            </Navbar>
+                <Container className={styles.height}>
+                    <Row className={styles.height}>
+                        <Col className={styles.pagesContainer} md="12">
+                            <Block className={styles.navBar}>
+                                <HomeIcon
+                                    className={styles.homeLink}
+                                    active={isHome()}
+                                    onTouchTap={goHome}
+                                    style={iconStyles}
+                                    color={indigo900}
+                                    hoverColor={indigo500}
+                                />
+                            </Block>
                             {this.props.children}
                         </Col>
                     </Row>

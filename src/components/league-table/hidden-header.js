@@ -6,16 +6,15 @@ const HiddenHeader = ({ header, onRef }) =>
     <thead>
         <tr>
             {header.map((item, index) =>
-                <th
-                    className={styles.headerCell}
-                    key={`th-${index}`}
-                    ref={e => {
-                        if (e) {
-                            onRef(e, index);
-                        }
-                    }}
-                >
-                    <div style={{ height: 0, overflow: 'hidden' }}>
+                <th key={`th-${index}`}>
+                    <div
+                        ref={e => {
+                            if (e) {
+                                onRef(e, index);
+                            }
+                        }}
+                        className={styles.hiddenCell}
+                    >
                         {item}
                     </div>
                 </th>,

@@ -31,6 +31,9 @@ export const theme = getMuiTheme({
     svgIcon: {
         color: coolGreyTwo,
     },
+    paper: {
+        color: 40,
+    },
     palette: {
         primary1Color: softGreen,
         accent1Color: dustyOrange,

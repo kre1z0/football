@@ -3,7 +3,7 @@ import styles from './team-item.scss';
 
 const TeamItem = ({ position, logo, club, played, won, drawn, lost, points }) =>
     <tr className={styles.teamRow}>
-        <td>
+        <td className="rank">
             {position}
         </td>
         <td>

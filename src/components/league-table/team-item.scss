@@ -18,7 +18,12 @@
   }
   :global {
     td {
+      white-space: nowrap;
       padding: 5px 15px;
+    }
+    .rank {
+      font-weight: bold;
+      width: 40px;
     }
   }
 }
