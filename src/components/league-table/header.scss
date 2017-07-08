@@ -1,9 +1,17 @@
 .headerCell {
+  position: relative;
   padding: 15px 15px 5px 15px;
+  &:before {
+    width: 1000%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    position: absolute;
+    border-bottom: 1px solid #dce1e6;
+  }
 }
 
 .tableWrapper {
-  position: relative;
-  width: 100%;
-  border-bottom: 2px solid rgba(26, 35, 126, 0.5);
+  will-change: transform;
 }

@@ -1,4 +1,5 @@
 .teamEmblemBlock {
+  vertical-align: middle;
   text-align: center;
   margin-right: 15px;
   display: inline-block;
@@ -20,6 +21,7 @@
     td {
       white-space: nowrap;
       padding: 5px 15px;
+      border-bottom: 1px solid #dce1e6;
     }
     .rank {
       font-weight: bold;

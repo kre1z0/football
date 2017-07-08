@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { indigo900, indigo500 } from 'material-ui/styles/colors';
 import SvgIcon from 'material-ui/SvgIcon';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 import Block from '../components/block';
 import withRouter from '../hoc/withRouter';
@@ -20,16 +20,8 @@ const HomeIcon = props =>
     </SvgIcon>;
 
 class App extends Component {
-    state = {
-        isOpen: false,
-    };
-    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen,
-        });
-    };
     render() {
-        const { isHome, goHome } = this.props;
+        const { goHome } = this.props;
         return (
             <div className="app-container">
                 <Container className={styles.height}>
@@ -38,7 +30,6 @@ class App extends Component {
                             <Block className={styles.navBar}>
                                 <HomeIcon
                                     className={styles.homeLink}
-                                    active={isHome()}
                                     onTouchTap={goHome}
                                     style={iconStyles}
                                     color={indigo900}

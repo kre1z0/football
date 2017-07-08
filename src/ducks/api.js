@@ -8,6 +8,7 @@ const apiState = Record({
     leagueTable: undefined,
     error: undefined,
     loading: undefined,
+    season: undefined,
 });
 
 const initState = new apiState({
@@ -16,6 +17,7 @@ const initState = new apiState({
     leagueTable: {},
     error: false,
     loading: false,
+    season: new Date().getFullYear(),
 });
 
 const fetchLeagueStart = createAction('api/fetch-league-start');
@@ -54,6 +56,8 @@ const fetchLeagueTableStart = createAction('api/fetch-league-table-start');
 const fetchLeagueTableSuccess = createAction('api/fetch-league-table-success');
 const fetchLeagueTableError = createAction('api/fetch-league-table-error');
 
+const setSeason = createAction('set-season');
+
 export const getTableFromLeague = (id, params) => dispatch => {
     dispatch(fetchLeagueTableStart());
     const url = `${apiURL}competitions/${id}/leagueTable${getQuery(params)}`;
@@ -75,6 +79,10 @@ export default createReducer(
                 .set('error', false)
                 .set('league', payload),
         [fetchLeagueError]: (state, payload) => state.set('error', payload),
+
+        [fetchLeagueError]: (state, payload) => state.set('error', payload),
+
+        [setSeason]: (state, payload) => state.set('season', payload),
 
         [fetchTeamsStart]: (state, payload) => state.set('loading', true),
         [fetchTeamsSuccess]: (state, payload) =>

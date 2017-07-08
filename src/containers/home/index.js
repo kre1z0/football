@@ -8,13 +8,8 @@ import League from '../../components/league';
 import './home.scss';
 
 class Home extends Component {
-    state = {
-        season: 2016,
-    };
-
     componentDidMount() {
-        const { season } = this.state;
-        const { getCompetition } = this.props;
+        const { getCompetition, season } = this.props;
         getCompetition && getCompetition({ season: season });
     }
 

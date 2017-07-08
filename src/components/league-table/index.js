@@ -24,6 +24,9 @@ class Body extends Component {
                                     points,
                                     losses,
                                     playedGames,
+                                    goals,
+                                    goalsAgainst,
+                                    goalDifference,
                                 }) =>
                                     <TeamItem
                                         key={teamName}
@@ -35,6 +38,9 @@ class Body extends Component {
                                         drawn={draws}
                                         lost={losses}
                                         points={points}
+                                        gf={goals}
+                                        ga={goalsAgainst}
+                                        gd={goalDifference}
                                     />,
                             )}
                     </tbody>

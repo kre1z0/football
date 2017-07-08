@@ -2,8 +2,11 @@ import React from 'react';
 
 import styles from './header.scss';
 
-const Header = ({ header, columnsWidth }) =>
-    <div className={styles.tableWrapper}>
+const Header = ({ header, columnsWidth, scrollLeft }) =>
+    <div
+        style={{ transform: `translateX(-${scrollLeft}px)` }}
+        className={styles.tableWrapper}
+    >
         <table>
             <thead>
                 <tr>

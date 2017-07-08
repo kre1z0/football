@@ -9,11 +9,23 @@ import Body from '../../components/league-table';
 
 import styles from './league.scss';
 
-const header = ['Rank', 'Club', 'Played', 'Won', 'Drawn', 'Lost', 'Points'];
+const header = [
+    'Rank',
+    'Club',
+    'Played',
+    'Won',
+    'Drawn',
+    'Lost',
+    'GF',
+    'GA',
+    'GD',
+    'Points',
+];
 
 class League extends Component {
     state = {
         columnsWidth: {},
+        scrollLeft: 0,
     };
 
     componentDidMount() {
@@ -40,15 +52,32 @@ class League extends Component {
 
     _columnsWidth = {};
 
+    onBodyScroll = ({ target }) => {
+        const scrollLeft = target.scrollLeft;
+
+        if (scrollLeft !== this.state.scrollLeft) {
+            this.setState(state => ({
+                scrollLeft,
+            }));
+        }
+    };
+
     render() {
         const { leagueTable: { standing } } = this.props;
-        const { columnsWidth } = this.state;
+        const { columnsWidth, scrollLeft } = this.state;
         console.log('standing', standing);
         return (
             <Block className={styles.tableBlock}>
                 {standing &&
-                    <div className={styles.leagueContainer}>
-                        <Header header={header} columnsWidth={columnsWidth} />
+                    <div
+                        onScroll={this.onBodyScroll}
+                        className={styles.leagueContainer}
+                    >
+                        <Header
+                            scrollLeft={scrollLeft}
+                            header={header}
+                            columnsWidth={columnsWidth}
+                        />
                         <Body
                             header={header}
                             teams={standing}
