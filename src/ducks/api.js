@@ -8,6 +8,7 @@ const apiState = Record({
     leagueTable: undefined,
     error: undefined,
     loading: undefined,
+    season: undefined,
 });
 
 const initState = new apiState({
@@ -16,14 +17,16 @@ const initState = new apiState({
     leagueTable: {},
     error: false,
     loading: false,
+    season: 2017,
 });
 
 const fetchLeagueStart = createAction('api/fetch-league-start');
 const fetchLeagueSuccess = createAction('api/fetch-league-success');
 const fetchLeagueError = createAction('api/fetch-league-error');
 
-export const getCompetition = (params = {}) => dispatch => {
-    dispatch(fetchLeagueStart());
+export const getCompetition = (params = {}, season) => dispatch => {
+    console.log('season --->', season);
+    dispatch(fetchLeagueStart(season));
     const url = `${apiURL}competitions${getQuery(params)}`;
     return fetch(url, { headers })
         .then(response => response.json())
@@ -54,10 +57,6 @@ const fetchLeagueTableStart = createAction('api/fetch-league-table-start');
 const fetchLeagueTableSuccess = createAction('api/fetch-league-table-success');
 const fetchLeagueTableError = createAction('api/fetch-league-table-error');
 
-const setSeason = createAction('set-season');
-
-export const getSeson = season => dispatch => dispatch(setSeason(season));
-
 export const getTableFromLeague = (id, params) => dispatch => {
     dispatch(fetchLeagueTableStart());
     const url = `${apiURL}competitions/${id}/leagueTable${getQuery(params)}`;
@@ -72,7 +71,8 @@ export const getTableFromLeague = (id, params) => dispatch => {
 
 export default createReducer(
     {
-        [fetchLeagueStart]: (state, payload) => state.set('loading', true),
+        [fetchLeagueStart]: (state, payload) =>
+            state.set('loading', true).set('season', payload),
         [fetchLeagueSuccess]: (state, payload) =>
             state
                 .set('loading', false)
@@ -81,8 +81,6 @@ export default createReducer(
         [fetchLeagueError]: (state, payload) => state.set('error', payload),
 
         [fetchLeagueError]: (state, payload) => state.set('error', payload),
-
-        [setSeason]: (state, payload) => state.set('season', payload),
 
         [fetchTeamsStart]: (state, payload) => state.set('loading', true),
         [fetchTeamsSuccess]: (state, payload) =>

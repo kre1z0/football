@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import withLoader from '../../hoc/withLoader';
 import TeamItem from './team-item';
 import HiddenHeader from '../../components/league-table/hidden-header';
 
@@ -50,4 +51,4 @@ class Body extends Component {
     }
 }
 
-export default Body;
+export default withLoader(Body);

@@ -5,7 +5,7 @@ import { indigo900, indigo500 } from 'material-ui/styles/colors';
 import SvgIcon from 'material-ui/SvgIcon';
 import cn from 'classnames';
 
-import { getSeson, getCompetition } from '../ducks/api';
+import { getCompetition } from '../ducks/api';
 import Block from '../components/block';
 import withRouter from '../hoc/withRouter';
 
@@ -25,27 +25,22 @@ const HomeIcon = props =>
 class App extends Component {
     state = {
         seasons: [2015, 2016, 2017],
-        selectedSeason: 2017,
     };
-
-    goSeason = (params, season) => {
-        const { selectedSeason } = this.state;
-        const { location: { pathname } } = this.props;
+    componentWillReceiveProps(nextProps) {
+        console.log('next -->', nextProps.season);
+        console.log('props -->', this.props.season);
+    }
+    goSeason = (params, selectedSeason) => {
+        const { season, location: { pathname } } = this.props;
         const { getCompetition } = this.props;
         if (pathname !== '/' || selectedSeason !== season) {
             this.props.history.push('/');
-            getCompetition && getCompetition(params, season);
-            this.setState({
-                selectedSeason: season,
-            });
+            getCompetition && getCompetition(params, selectedSeason);
         }
     };
-    componentWillReceiveProps(nextProps) {
-        console.log('nextProps', nextProps);
-    }
     render() {
-        const { goHome } = this.props;
-        const { seasons, selectedSeason } = this.state;
+        const { goHome, season } = this.props;
+        const { seasons } = this.state;
         return (
             <div className="app-container">
                 <Container className={styles.height}>
@@ -59,24 +54,24 @@ class App extends Component {
                                     color={indigo900}
                                     hoverColor={indigo500}
                                 />
-                                {seasons.map(season => {
+                                {seasons.map(seasonNumber => {
                                     const classNameNav = cn(styles.season, {
                                         [styles.selected]:
-                                            selectedSeason === season,
+                                            seasonNumber === season,
                                     });
                                     return (
                                         <div
                                             onTouchTap={() =>
                                                 this.goSeason(
                                                     {
-                                                        season: season,
+                                                        season: seasonNumber,
                                                     },
-                                                    season,
+                                                    seasonNumber,
                                                 )}
                                             className={classNameNav}
-                                            key={season}
+                                            key={seasonNumber}
                                         >
-                                            {season}
+                                            {seasonNumber}
                                         </div>
                                     );
                                 })}
@@ -90,10 +85,11 @@ class App extends Component {
     }
 }
 
-const mapProps = () => ({});
+const mapProps = ({ api: { season } }) => ({
+    season,
+});
 
 const mapActions = {
-    getSeson,
     getCompetition,
 };
 

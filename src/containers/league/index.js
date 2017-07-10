@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Badge } from 'reactstrap';
 
 import withError from '../../hoc/withError';
 import { getTableFromLeague } from '../../ducks/api';
@@ -68,9 +69,11 @@ class League extends Component {
     };
 
     render() {
-        const { leagueTable: { standing } } = this.props;
+        const {
+            loading,
+            leagueTable: { standing, leagueCaption },
+        } = this.props;
         const { columnsWidth, scrollLeft } = this.state;
-        //console.log('standing', standing);
         return (
             <Block className={styles.tableBlock}>
                 {standing &&
@@ -78,12 +81,16 @@ class League extends Component {
                         onScroll={this.onBodyScroll}
                         className={styles.leagueContainer}
                     >
+                        <h2 className={styles.title}>
+                            {leagueCaption}
+                        </h2>
                         <Header
                             scrollLeft={scrollLeft}
                             header={header}
                             columnsWidth={columnsWidth}
                         />
                         <Body
+                            loading={loading}
                             header={header}
                             teams={standing}
                             onRef={this.onRef}

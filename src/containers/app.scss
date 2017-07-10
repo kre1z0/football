@@ -7,6 +7,7 @@
 }
 
 .season {
+  padding: 0 5px;
   color: #1a237e;
   cursor: pointer;
   margin-right: 20px;
@@ -19,11 +20,14 @@
 }
 
 .selected {
-  color: red;
+  background-color: #1a237e;
+  border-radius: 3px;
+  color: #fff;
   cursor: default;
   user-select: none;
+  transition: background-color .3s ease;
   &:hover {
-    color: red;
+    color: #fff;
   }
 }
 
