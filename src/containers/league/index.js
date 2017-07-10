@@ -29,9 +29,14 @@ class League extends Component {
     };
 
     componentDidMount() {
+        console.log('componentDidMount');
         const { getTableFromLeague, leagueId, matchDay } = this.props;
         getTableFromLeague &&
             getTableFromLeague(leagueId, { matchday: matchDay });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('nextProps', nextProps);
     }
 
     onRef = (ref, columnIndex) => {
@@ -65,7 +70,7 @@ class League extends Component {
     render() {
         const { leagueTable: { standing } } = this.props;
         const { columnsWidth, scrollLeft } = this.state;
-        console.log('standing', standing);
+        //console.log('standing', standing);
         return (
             <Block className={styles.tableBlock}>
                 {standing &&

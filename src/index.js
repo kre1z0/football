@@ -8,13 +8,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
 import configureStore from './store';
-import moment from 'moment';
 
-import 'moment/locale/ru';
 OfflinePluginRuntime.install();
 injectTapEventPlugin();
-
-moment.locale('ru');
 
 const store = configureStore();
 

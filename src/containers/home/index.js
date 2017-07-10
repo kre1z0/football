@@ -2,19 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import withRouter from '../../hoc/withRouter';
+import withError from '../../hoc/withError';
 import { getCompetition } from '../../ducks/api';
 import League from '../../components/league';
 
-import './home.scss';
-
 class Home extends Component {
     componentDidMount() {
-        const { getCompetition, season } = this.props;
-        getCompetition && getCompetition({ season: season });
+        const { getCompetition } = this.props;
+        getCompetition && getCompetition({ season: 2017 });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('nextProps', nextProps);
     }
 
     render() {
-        const { league, goTeams, loading, goLeagueTable } = this.props;
+        const { league, loading, goLeagueTable } = this.props;
         return (
             <div>
                 <League
@@ -27,7 +30,8 @@ class Home extends Component {
     }
 }
 
-const mapProps = ({ api: { league, loading } }) => ({
+const mapProps = ({ api: { league, loading, error } }) => ({
+    error,
     league,
     loading,
 });
@@ -36,4 +40,4 @@ const mapActions = {
     getCompetition,
 };
 
-export default connect(mapProps, mapActions)(withRouter(Home));
+export default connect(mapProps, mapActions)(withError(withRouter(Home)));

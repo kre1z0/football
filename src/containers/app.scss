@@ -1,3 +1,32 @@
+.pagesContainer {
+  height: calc(100% - 86px);
+}
+
+.height {
+  height: 100%;
+}
+
+.season {
+  color: #1a237e;
+  cursor: pointer;
+  margin-right: 20px;
+  background-color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  &:hover {
+    color: #3f51b5;
+  }
+}
+
+.selected {
+  color: red;
+  cursor: default;
+  user-select: none;
+  &:hover {
+    color: red;
+  }
+}
+
 .homeLink {
   cursor: pointer;
 }
@@ -7,12 +36,4 @@
   padding: 5px 10px;
   display: flex;
   align-items: center;
-}
-
-.pagesContainer {
-  height: calc(100% - 86px);
-}
-
-.height {
-  height: 100%;
 }
