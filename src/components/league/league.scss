@@ -1,3 +1,33 @@
+@import "../../assets/base/colors";
+
+.leagueContainer {
+  height: 100%;
+  overflow: auto;
+}
+
 .leagueItem {
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 10px 15px;
+  border-bottom: 1px solid $paleGrey;
+  color: rgb(26, 35, 126);
+  &:hover {
+    cursor: pointer;
+    background-color: #1a237e;
+    color: #fff;
+  }
+}
+
+.caption {
+  font-weight: bold;
+}
+
+.tour {
+  padding: 0 10px;
+}
+
+.timeUpdate {
+  padding-left: 10px;
 }

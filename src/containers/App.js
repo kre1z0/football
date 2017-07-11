@@ -26,10 +26,7 @@ class App extends Component {
     state = {
         seasons: [2015, 2016, 2017],
     };
-    componentWillReceiveProps(nextProps) {
-        console.log('next -->', nextProps.season);
-        console.log('props -->', this.props.season);
-    }
+
     goSeason = (params, selectedSeason) => {
         const { season, location: { pathname } } = this.props;
         const { getCompetition } = this.props;
@@ -38,6 +35,7 @@ class App extends Component {
             getCompetition && getCompetition(params, selectedSeason);
         }
     };
+
     render() {
         const { goHome, season } = this.props;
         const { seasons } = this.state;

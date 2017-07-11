@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 
 import withError from '../../hoc/withError';
 import withRouter from '../../hoc/withRouter';
+import withLoader from '../../hoc/withLoader';
 import { getTableFromLeague } from '../../ducks/api';
 import Loader from '../../components/loader';
 import Table from '../../components/table';
 import TeamItem from '../../components/team/team-item';
-
-import styles from './league.scss';
 
 const headers = [
     'Rank',
@@ -25,7 +24,6 @@ const headers = [
 
 class League extends Component {
     componentDidMount() {
-        console.log('componentDidMount');
         const { getTableFromLeague, leagueId, matchDay } = this.props;
         getTableFromLeague &&
             getTableFromLeague(leagueId, { matchday: matchDay });
@@ -37,7 +35,7 @@ class League extends Component {
             leagueTable: { standing, leagueCaption },
         } = this.props;
         return (
-            <Table title={leagueCaption} tHead={headers}>
+            <Table loading={loading} title={leagueCaption} tHead={headers}>
                 {standing &&
                     standing.map(
                         ({

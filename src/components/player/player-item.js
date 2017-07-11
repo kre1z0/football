@@ -1,28 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import styles from '../team/team-item.scss';
+import styles from '../player/player-item.scss';
 
-class TeamItem extends Component {
-    render() {
-        const {
-            contractUntil,
-            dateOfBirth,
-            jerseyNumber,
-            marketValue,
-            name,
-            nationality,
-            position,
-        } = this.props;
-        return (
-            <tr className={styles.teamRow}>
-                <td>1</td>
-                <td>2tertert</td>
-                <td>2tertert</td>
-                <td>2tertert</td>
-                <td>2tertert</td>
-            </tr>
-        );
-    }
-}
+const PlayerItem = ({
+    player: {
+        contractUntil,
+        dateOfBirth,
+        jerseyNumber,
+        marketValue,
+        name,
+        nationality,
+        position,
+    },
+}) => {
+    return (
+        <tr className={styles.teamRow}>
+            <td>
+                {jerseyNumber}
+            </td>
+            <td>
+                {nationality}
+            </td>
+            <td>
+                {position}
+            </td>
+            <td>
+                {name}
+            </td>
+            <td>
+                {dateOfBirth}
+            </td>
+            <td>
+                {contractUntil}
+            </td>
+        </tr>
+    );
+};
 
-export default TeamItem;
+export default PlayerItem;

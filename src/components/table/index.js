@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HiddenHeader from '../../components/table/hidden-header';
 import Header from '../../components/table/header';
+import withLoader from '../../hoc/withLoader';
 
 import styles from './table.scss';
 
@@ -66,4 +67,4 @@ class Table extends Component {
     }
 }
 
-export default Table;
+export default withLoader(Table);

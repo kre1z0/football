@@ -27,7 +27,6 @@ const fetchLeagueSuccess = createAction('api/fetch-league-success');
 const fetchLeagueError = createAction('api/fetch-league-error');
 
 export const getCompetition = (params = {}, season) => dispatch => {
-    console.log('season --->', season);
     dispatch(fetchLeagueStart(season));
     const url = `${apiURL}competitions${getQuery(params)}`;
     return fetch(url, { headers })

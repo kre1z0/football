@@ -17,6 +17,11 @@
   &:nth-child(odd) {
     background-color: #f7f7f7;
   }
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(26, 35, 126, .5);
+    color: #fff;
+  }
   :global {
     td {
       white-space: nowrap;

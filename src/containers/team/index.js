@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Avatar from 'material-ui/Avatar';
 
 import { getTeamPlayers } from '../../ducks/api';
+import PlayerItem from '../../components/player/player-item';
 import Table from '../../components/table';
 
+import styles from './team.scss';
+
 const headers = [
-    'Rank',
-    'Club',
-    'Played',
-    'Won',
-    'Drawn',
-    'Lost',
-    'GF',
-    'GA',
-    'GD',
-    'Points',
+    '№',
+    'Nationality',
+    'Position',
+    'Name',
+    'Date of Birth',
+    'Contract until',
 ];
 
 class Team extends Component {
@@ -25,17 +23,36 @@ class Team extends Component {
     }
 
     render() {
-        console.log('players', this.props.players);
-        return <Table title="players" tHead={headers} />;
+        const { players, loading, count, teamName } = this.props;
+        return (
+            <Table loading={loading} title={teamName} tHead={headers}>
+                {count === 0
+                    ? <tr>
+                          <td colSpan={headers.length}>
+                              <div className={styles.noPlayers}>
+                                  no players data for this team...
+                              </div>
+                          </td>
+                      </tr>
+                    : players &&
+                      players.map(player =>
+                          <PlayerItem key={player.name} player={player} />,
+                      )}
+            </Table>
+        );
     }
 }
 
 const mapProps = (
-    { api: { players: { players, count } } },
+    { api: { players: { players, count }, loading } },
     { match: { params } },
 ) => {
     const teamId = params.teamId && params.teamId.split('-')[0];
+    const teamName = params.teamId && params.teamId.split('-')[1];
     return {
+        teamName,
+        count,
+        loading,
         teamId,
         players,
     };

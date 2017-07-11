@@ -1,0 +1,16 @@
+.teamRow {
+  &:nth-child(odd) {
+    background-color: #f7f7f7;
+  }
+  :global {
+    td {
+      white-space: nowrap;
+      padding: 5px 15px;
+      border-bottom: 1px solid #dce1e6;
+    }
+    .rank {
+      font-weight: bold;
+      width: 40px;
+    }
+  }
+}
