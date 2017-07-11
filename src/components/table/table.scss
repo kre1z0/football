@@ -1,6 +1,6 @@
 @import "../../assets/base/colors";
 
-.leagueContainer {
+.tableContainer {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -11,9 +11,17 @@
   }
 }
 
+.table {
+  width: 100%;
+}
+
 .title {
   padding: 15px;
   margin: 0;
   font-size: 1.4rem;
   border-bottom: 1px solid $paleGrey;
+}
+
+.leagueGrid {
+  overflow: auto;
 }

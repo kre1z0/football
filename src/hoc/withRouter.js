@@ -8,8 +8,8 @@ export default function(EnhancedComponent) {
         isHome = () => this.props.location.pathname === '/';
         goHome = () => this.props.history.push('/');
 
-        goTeams = (id = '', league) =>
-            this.props.history.push(`/teams/${id}-${league}`);
+        goTeam = (id = '', team) =>
+            this.props.history.push(`/team/${id}-${team}`);
 
         goLeagueTable = (id = '', league, matchday = {}) =>
             this.props.history.push(`/league/${id}-${league}-${matchday}`);
@@ -19,7 +19,7 @@ export default function(EnhancedComponent) {
                 <EnhancedComponent
                     isHome={this.isHome}
                     goHome={this.goHome}
-                    goTeams={this.goTeams}
+                    goTeam={this.goTeam}
                     goLeagueTable={this.goLeagueTable}
                     {...this.state}
                     {...this.props}

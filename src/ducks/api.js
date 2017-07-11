@@ -9,6 +9,7 @@ const apiState = Record({
     error: undefined,
     loading: undefined,
     season: undefined,
+    players: undefined,
 });
 
 const initState = new apiState({
@@ -18,6 +19,7 @@ const initState = new apiState({
     error: false,
     loading: false,
     season: 2017,
+    players: {},
 });
 
 const fetchLeagueStart = createAction('api/fetch-league-start');
@@ -43,7 +45,7 @@ const fetchTeamsError = createAction('api/fetch-teams-error');
 
 export const getAllTeamsFromLeague = id => dispatch => {
     dispatch(fetchTeamsStart());
-    const url = `${apiURL}competitions/${id}/teams`;
+    const url = `${apiURL}teams/${id}/players`;
     return fetch(url, { headers })
         .then(response => response.json())
         .then(response => {
@@ -67,6 +69,22 @@ export const getTableFromLeague = (id, params) => dispatch => {
             else dispatch(fetchLeagueTableSuccess(response));
         })
         .catch(error => dispatch(fetchLeagueTableError(error)));
+};
+
+const fetchTeamPlayersStart = createAction('api/fetch-team-players-start');
+const fetchTeamPlayersSuccess = createAction('api/fetch-team-players-success');
+const fetchTeamPlayersError = createAction('api/fetch-team-players-error');
+
+export const getTeamPlayers = id => dispatch => {
+    dispatch(fetchTeamPlayersStart());
+    const url = `${apiURL}teams/${id}/players`;
+    return fetch(url, { headers })
+        .then(response => response.json())
+        .then(response => {
+            if (response.error) dispatch(fetchTeamPlayersError(response.error));
+            else dispatch(fetchTeamPlayersSuccess(response));
+        })
+        .catch(error => dispatch(fetchTeamPlayersError(error)));
 };
 
 export default createReducer(
@@ -97,6 +115,15 @@ export default createReducer(
                 .set('error', false)
                 .set('leagueTable', payload),
         [fetchLeagueTableError]: (state, payload) =>
+            state.set('error', payload),
+
+        [fetchTeamPlayersStart]: (state, payload) => state.set('loading', true),
+        [fetchTeamPlayersSuccess]: (state, payload) =>
+            state
+                .set('loading', false)
+                .set('error', false)
+                .set('players', payload),
+        [fetchTeamPlayersError]: (state, payload) =>
             state.set('error', payload),
     },
     initState,

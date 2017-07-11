@@ -26,10 +26,11 @@ class TeamItem extends Component {
             ga,
             gd,
             points,
+            goTeam,
         } = this.props;
         const { loading } = this.state;
         return (
-            <tr className={styles.teamRow}>
+            <tr className={styles.teamRow} onTouchTap={goTeam}>
                 <td className="rank">
                     {position}
                 </td>

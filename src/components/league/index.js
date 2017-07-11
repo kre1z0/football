@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment'; // ➡ http://momentjs.com/
-import { indigo900, indigo500 } from 'material-ui/styles/colors';
+import { indigo900 } from 'material-ui/styles/colors';
 
-import Block from '../../components/block';
 import withLoader from '../../hoc/withLoader';
 
 import styles from './league.scss';
@@ -11,7 +10,7 @@ class League extends Component {
     render() {
         const { league, goLeagueTable } = this.props;
         return (
-            <Block>
+            <div>
                 {league &&
                     league.map(
                         (
@@ -59,7 +58,7 @@ class League extends Component {
                             );
                         },
                     )}
-            </Block>
+            </div>
         );
     }
 }

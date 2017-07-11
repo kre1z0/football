@@ -76,7 +76,9 @@ class App extends Component {
                                     );
                                 })}
                             </Block>
-                            {this.props.children}
+                            <Block style={{ height: '100%' }}>
+                                {this.props.children}
+                            </Block>
                         </Col>
                     </Row>
                 </Container>

@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Badge } from 'reactstrap';
 
 import withError from '../../hoc/withError';
+import withRouter from '../../hoc/withRouter';
 import { getTableFromLeague } from '../../ducks/api';
-import Header from '../../components/league-table/header';
-import Block from '../../components/block';
-import Body from '../../components/league-table';
+import Loader from '../../components/loader';
+import Table from '../../components/table';
+import TeamItem from '../../components/team/team-item';
 
 import styles from './league.scss';
 
-const header = [
+const headers = [
     'Rank',
     'Club',
     'Played',
@@ -24,79 +24,60 @@ const header = [
 ];
 
 class League extends Component {
-    state = {
-        columnsWidth: {},
-        scrollLeft: 0,
-    };
-
     componentDidMount() {
         console.log('componentDidMount');
         const { getTableFromLeague, leagueId, matchDay } = this.props;
         getTableFromLeague &&
             getTableFromLeague(leagueId, { matchday: matchDay });
     }
-
-    componentWillReceiveProps(nextProps) {
-        console.log('nextProps', nextProps);
-    }
-
-    onRef = (ref, columnIndex) => {
-        if (
-            this._columnsWidth[columnIndex] === ref.offsetWidth ||
-            ref.offsetWidth === 0
-        )
-            return;
-
-        this._columnsWidth[columnIndex] = ref.offsetWidth;
-
-        if (Object.keys(this._columnsWidth).length === header.length) {
-            this.setState(state => ({
-                columnsWidth: this._columnsWidth,
-            }));
-        }
-    };
-
-    _columnsWidth = {};
-
-    onBodyScroll = ({ target }) => {
-        const scrollLeft = target.scrollLeft;
-
-        if (scrollLeft !== this.state.scrollLeft) {
-            this.setState(state => ({
-                scrollLeft,
-            }));
-        }
-    };
-
     render() {
         const {
             loading,
+            goTeam,
             leagueTable: { standing, leagueCaption },
         } = this.props;
-        const { columnsWidth, scrollLeft } = this.state;
         return (
-            <Block className={styles.tableBlock}>
+            <Table title={leagueCaption} tHead={headers}>
                 {standing &&
-                    <div
-                        onScroll={this.onBodyScroll}
-                        className={styles.leagueContainer}
-                    >
-                        <h2 className={styles.title}>
-                            {leagueCaption}
-                        </h2>
-                        <Header
-                            scrollLeft={scrollLeft}
-                            header={header}
-                            columnsWidth={columnsWidth}
-                        />
-                        <Body
-                            loading={loading}
-                            header={header}
-                            teams={standing}
-                            onRef={this.onRef}
-                        />
-                    </div>}
-            </Block>
+                    standing.map(
+                        ({
+                            teamName,
+                            crestURI,
+                            position,
+                            wins,
+                            draws,
+                            points,
+                            losses,
+                            playedGames,
+                            goals,
+                            goalsAgainst,
+                            goalDifference,
+                            _links: { team: { href } },
+                        }) => {
+                            const teamId = parseInt(
+                                href.split('teams/')[1],
+                                10,
+                            );
+                            return (
+                                <TeamItem
+                                    goTeam={() => goTeam(teamId, teamName)}
+                                    key={teamName}
+                                    position={position}
+                                    logo={crestURI}
+                                    club={teamName}
+                                    played={playedGames}
+                                    won={wins}
+                                    drawn={draws}
+                                    lost={losses}
+                                    points={points}
+                                    gf={goals}
+                                    ga={goalsAgainst}
+                                    gd={goalDifference}
+                                />
+                            );
+                        },
+                    )}
+            </Table>
         );
     }
 }
@@ -120,4 +101,4 @@ const mapActions = {
     getTableFromLeague,
 };
 
-export default connect(mapProps, mapActions)(withError(League));
+export default connect(mapProps, mapActions)(withRouter(withError(League)));

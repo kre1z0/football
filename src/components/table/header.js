@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './header.scss';
 
-const Header = ({ header, columnsWidth, scrollLeft }) =>
+const Header = ({ tHead, columnsWidth, scrollLeft }) =>
     <div
         style={{ transform: `translateX(-${scrollLeft}px)` }}
         className={styles.tableWrapper}
@@ -10,7 +10,7 @@ const Header = ({ header, columnsWidth, scrollLeft }) =>
         <table>
             <thead>
                 <tr>
-                    {header.map((item, index) =>
+                    {tHead.map((item, index) =>
                         <th key={`th-${index}`}>
                             <div
                                 className={styles.headerCell}

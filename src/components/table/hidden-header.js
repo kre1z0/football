@@ -2,10 +2,10 @@ import React from 'react';
 
 import styles from './hidden-header.scss';
 
-const HiddenHeader = ({ header, onRef }) =>
+const HiddenHeader = ({ tHead, onRef }) =>
     <thead>
         <tr>
-            {header.map((item, index) =>
+            {tHead.map((item, index) =>
                 <th key={`th-${index}`}>
                     <div
                         ref={e => {
