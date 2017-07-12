@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import withError from '../../hoc/withError';
 import withRouter from '../../hoc/withRouter';
-import withLoader from '../../hoc/withLoader';
-import { getTableFromLeague } from '../../ducks/api';
-import Loader from '../../components/loader';
+import { getTableFromLeague, getLeagueRound } from '../../ducks/api';
 import Table from '../../components/table';
 import TeamItem from '../../components/team/team-item';
+import Pagination from '../../components/pagination';
 
 const headers = [
     'Rank',
@@ -24,56 +24,79 @@ const headers = [
 
 class League extends Component {
     componentDidMount() {
-        const { getTableFromLeague, leagueId, matchDay } = this.props;
+        const {
+            getTableFromLeague,
+            getLeagueRound,
+            leagueId,
+            currentMatchDay,
+        } = this.props;
         getTableFromLeague &&
-            getTableFromLeague(leagueId, { matchday: matchDay });
+            getTableFromLeague(leagueId, { matchday: currentMatchDay });
+        getLeagueRound &&
+            getLeagueRound(leagueId, { matchday: currentMatchDay });
     }
+
+    componentWillReceiveProps(nextProps) {
+        const {
+            getTableFromLeague,
+            getLeagueRound,
+            leagueId,
+            currentMatchDay,
+        } = this.props;
+        if (currentMatchDay !== nextProps.currentMatchDay) {
+            getTableFromLeague &&
+                getTableFromLeague(leagueId, {
+                    matchday: nextProps.currentMatchDay,
+                });
+            getLeagueRound &&
+                getLeagueRound(leagueId, {
+                    matchday: nextProps.currentMatchDay,
+                });
+        }
+    }
+
     render() {
         const {
             loading,
+            numberOfMatchdays,
+            leagueId,
             goTeam,
+            goLeagueTable,
+            currentMatchDay,
             leagueTable: { standing, leagueCaption },
         } = this.props;
+        const rounds = Array.from(
+            { length: numberOfMatchdays },
+            (_, index) => index + 1,
+        );
         return (
-            <Table loading={loading} title={leagueCaption} tHead={headers}>
+            <Table
+                pagination={
+                    <Pagination
+                        numberOfMatchdays={numberOfMatchdays}
+                        goLeagueTable={goLeagueTable}
+                        currentMatchday={currentMatchDay}
+                        leagueId={leagueId}
+                        label="rounds:"
+                        items={rounds}
+                    />
+                }
+                loading={loading}
+                title={leagueCaption}
+                tHead={headers}
+            >
+                <Helmet>
+                    <title>
+                        {leagueCaption}
+                    </title>
+                </Helmet>
                 {standing &&
-                    standing.map(
-                        ({
-                            teamName,
-                            crestURI,
-                            position,
-                            wins,
-                            draws,
-                            points,
-                            losses,
-                            playedGames,
-                            goals,
-                            goalsAgainst,
-                            goalDifference,
-                            _links: { team: { href } },
-                        }) => {
-                            const teamId = parseInt(
-                                href.split('teams/')[1],
-                                10,
-                            );
-                            return (
-                                <TeamItem
-                                    goTeam={() => goTeam(teamId, teamName)}
-                                    key={teamName}
-                                    position={position}
-                                    logo={crestURI}
-                                    club={teamName}
-                                    played={playedGames}
-                                    won={wins}
-                                    drawn={draws}
-                                    lost={losses}
-                                    points={points}
-                                    gf={goals}
-                                    ga={goalsAgainst}
-                                    gd={goalDifference}
-                                />
-                            );
-                        },
+                    standing.map(team =>
+                        <TeamItem
+                            team={team}
+                            goTeam={goTeam}
+                            key={team.teamName}
+                        />,
                     )}
             </Table>
         );
@@ -85,18 +108,21 @@ const mapProps = (
     { match: { params } },
 ) => {
     const leagueId = params.leagueId && params.leagueId.split('-')[0];
-    const matchDay = params.leagueId && params.leagueId.split('-')[2];
+    const numberOfMatchdays = params.leagueId && params.leagueId.split('-')[1];
+    const currentMatchDay = params.leagueId && params.leagueId.split('-')[2];
     return {
         loading,
         leagueTable,
         leagueId,
-        matchDay,
+        numberOfMatchdays,
+        currentMatchDay,
         error,
     };
 };
 
 const mapActions = {
     getTableFromLeague,
+    getLeagueRound,
 };
 
 export default connect(mapProps, mapActions)(withRouter(withError(League)));

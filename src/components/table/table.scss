@@ -17,11 +17,18 @@
   height: 100%;
 }
 
-.title {
+.titleBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 15px;
+  border-bottom: 1px solid $paleGrey;
+}
+
+.title {
+  padding-right: 15px;
   margin: 0;
   font-size: 1.4rem;
-  border-bottom: 1px solid $paleGrey;
 }
 
 .leagueGrid {

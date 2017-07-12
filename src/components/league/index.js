@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment'; // ➡ http://momentjs.com/
 
 import withLoader from '../../hoc/withLoader';
+import withRouter from '../../hoc/withRouter';
 
 import styles from './league.scss';
 
@@ -37,8 +38,8 @@ class League extends Component {
                                     onTouchTap={() =>
                                         goLeagueTable(
                                             id,
-                                            league,
                                             numberOfMatchdays,
+                                            currentMatchday,
                                         )}
                                 >
                                     <div className={styles.caption}>
@@ -75,4 +76,4 @@ class League extends Component {
     }
 }
 
-export default withLoader(League);
+export default withRouter(withLoader(League));

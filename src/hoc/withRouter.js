@@ -11,8 +11,13 @@ export default function(EnhancedComponent) {
         goTeam = (id = '', team) =>
             this.props.history.push(`/team/${id}-${team}`);
 
-        goLeagueTable = (id = '', league, matchday = {}) =>
-            this.props.history.push(`/league/${id}-${league}-${matchday}`);
+        goLeagueTable = (leagueId = '', matchdays = '', matchday = {}) =>
+            this.props.history.push(
+                `/league/${leagueId}-${matchdays}-${matchday}`,
+            );
+
+        goToRound = (id, matchday = {}) =>
+            this.props.history.push(`/round/${id}-${matchday}`);
 
         render() {
             return (
@@ -21,6 +26,7 @@ export default function(EnhancedComponent) {
                     goHome={this.goHome}
                     goTeam={this.goTeam}
                     goLeagueTable={this.goLeagueTable}
+                    goToRound={this.goToRound}
                     {...this.state}
                     {...this.props}
                 />

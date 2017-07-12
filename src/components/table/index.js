@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import HiddenHeader from '../../components/table/hidden-header';
 import Header from '../../components/table/header';
-import withLoader from '../../hoc/withLoader';
 
 import styles from './table.scss';
 
@@ -41,14 +40,17 @@ class Table extends Component {
     };
 
     render() {
-        const { title, tHead, children } = this.props;
+        const { title, tHead, children, pagination } = this.props;
         const { columnsWidth, scrollLeft } = this.state;
         return (
             <div onScroll={this.onBodyScroll} className={styles.tableContainer}>
-                {title &&
-                    <h2 className={styles.title}>
-                        {title}
-                    </h2>}
+                <div className={styles.titleBlock}>
+                    {title &&
+                        <h2 className={styles.title}>
+                            {title}
+                        </h2>}
+                    {pagination && pagination}
+                </div>
                 <Header
                     scrollLeft={scrollLeft}
                     tHead={tHead}
@@ -67,4 +69,4 @@ class Table extends Component {
     }
 }
 
-export default withLoader(Table);
+export default Table;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import withRouter from '../../hoc/withRouter';
 import withError from '../../hoc/withError';
 import { getCompetition } from '../../ducks/api';
 import League from '../../components/league';
@@ -13,21 +13,22 @@ class Home extends Component {
     }
 
     render() {
-        const { league, loading, goLeagueTable } = this.props;
+        const { league, loading } = this.props;
         return (
-            <League
-                loading={loading}
-                league={league}
-                goLeagueTable={goLeagueTable}
-            />
+            <div>
+                <Helmet>
+                    <title>Football</title>
+                </Helmet>
+                {league && <League loading={loading} league={league} />}
+            </div>
         );
     }
 }
 
 const mapProps = ({ api: { league, loading, error, season } }) => ({
+    loading,
     error,
     league,
-    loading,
     season,
 });
 
@@ -35,4 +36,4 @@ const mapActions = {
     getCompetition,
 };
 
-export default connect(mapProps, mapActions)(withError(withRouter(Home)));
+export default connect(mapProps, mapActions)(withError(Home));

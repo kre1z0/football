@@ -1,0 +1,32 @@
+@import "../../assets/base/colors";
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+.item {
+  color: $indigo900;
+  padding: 1px 3px;
+  margin: 0 2px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    border-radius: 3px;
+    background-color: $indigo900;
+    color: #fff;
+  }
+}
+
+.active {
+  border-radius: 3px;
+  background-color: $indigo900;
+  color: #fff;
+  cursor: default;
+}
+
+.label {
+  padding: 2px 0 0 5px;
+}

@@ -15,22 +15,29 @@ class TeamItem extends Component {
     };
     render() {
         const {
-            position,
-            logo,
-            club,
-            played,
-            won,
-            drawn,
-            lost,
-            gf,
-            ga,
-            gd,
-            points,
             goTeam,
+            team: {
+                teamName,
+                crestURI,
+                position,
+                wins,
+                draws,
+                points,
+                losses,
+                playedGames,
+                goals,
+                goalsAgainst,
+                goalDifference,
+                _links: { team: { href } },
+            },
         } = this.props;
+        const teamId = parseInt(href.split('teams/')[1], 10);
         const { loading } = this.state;
         return (
-            <tr className={styles.teamRow} onTouchTap={goTeam}>
+            <tr
+                className={styles.teamRow}
+                onTouchTap={() => goTeam(teamId, teamName)}
+            >
                 <td className="rank">
                     {position}
                 </td>
@@ -38,14 +45,14 @@ class TeamItem extends Component {
                     <img
                         style={{ display: 'none' }}
                         onLoad={this.onLoadLogo}
-                        src={logo}
+                        src={crestURI}
                         alt=""
                     />
                     {loading
                         ? <div className={styles.teamEmblemBlock}>
                               <img
                                   className={styles.teamEmblemImg}
-                                  src={logo}
+                                  src={crestURI}
                                   alt=""
                               />
                           </div>
@@ -56,28 +63,28 @@ class TeamItem extends Component {
                                   alt=""
                               />
                           </div>}
-                    {club}
+                    {teamName}
                 </td>
                 <td>
-                    {played}
+                    {playedGames}
                 </td>
                 <td>
-                    {won}
+                    {wins}
                 </td>
                 <td>
-                    {drawn}
+                    {draws}
                 </td>
                 <td>
-                    {lost}
+                    {losses}
                 </td>
                 <td>
-                    {gf}
+                    {goals}
                 </td>
                 <td>
-                    {ga}
+                    {goalsAgainst}
                 </td>
                 <td>
-                    {gd}
+                    {goalDifference}
                 </td>
                 <td>
                     {points}
