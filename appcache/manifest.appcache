@@ -1,0 +1,16 @@
+CACHE MANIFEST
+#ver:2017-7-12 18:49:12
+#plugin:4.8.1
+
+CACHE:
+/football/static/media/no-logo.1f251911.png
+/football/static/js/main.3d38bf98.js
+/football/static/css/main.a3c76f43.css
+/football/
+/football/asset-manifest.json
+
+NETWORK:
+*
+
+FALLBACK:
+/ /index.html
