@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import withError from '../../hoc/withError';
 import { getCompetition } from '../../ducks/api';
+import Block from '../../components/block';
 import League from '../../components/league';
 
 class Home extends Component {
@@ -15,12 +16,12 @@ class Home extends Component {
     render() {
         const { league, loading } = this.props;
         return (
-            <div>
+            <Block style={{ height: '100%' }}>
                 <Helmet>
                     <title>Football</title>
                 </Helmet>
-                {league && <League loading={loading} league={league} />}
-            </div>
+                <League loading={loading} league={league} />
+            </Block>
         );
     }
 }

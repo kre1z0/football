@@ -1,3 +1,36 @@
+@import "../../assets/base/colors";
+@import "../../assets/base/media";
+
 .item {
-  background-color: red;
+  display: flex;
+  padding: 5px;
+  white-space: nowrap;
+  align-items: center;
+  background-color: #f2f2f2;
+  margin: 5px;
+  border-radius: 3px;
+  border: 1px solid $paleGrey;
+  @media #{$tablet} {
+    white-space: normal;
+  }
+}
+
+.homeTeam {
+  margin-right: 5px;
+  line-height: normal !important;
+  @media #{$tablet} {
+    white-space: normal;
+  }
+}
+
+.awayTeam {
+  margin-left: 5px;
+  line-height: normal !important;
+  @media #{$tablet} {
+    white-space: normal;
+  }
+}
+
+.date {
+  margin-right: 5px;
 }

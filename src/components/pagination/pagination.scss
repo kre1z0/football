@@ -2,14 +2,19 @@
 
 .pagination {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  padding: 10px 0;
+  padding: 10px;
 }
 
 .item {
   color: $indigo900;
-  padding: 1px 3px;
-  margin: 0 2px;
+  margin: 3px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
@@ -25,8 +30,4 @@
   background-color: $indigo900;
   color: #fff;
   cursor: default;
-}
-
-.label {
-  padding: 2px 0 0 5px;
 }

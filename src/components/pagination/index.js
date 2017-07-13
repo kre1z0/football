@@ -7,7 +7,6 @@ class PaginationTour extends Component {
     render() {
         const {
             items,
-            label,
             numberOfMatchdays,
             goLeagueTable,
             currentMatchday,
@@ -15,9 +14,6 @@ class PaginationTour extends Component {
         } = this.props;
         return (
             <div className={styles.pagination}>
-                <div className={styles.label}>
-                    {label}
-                </div>
                 {items &&
                     items.map(round => {
                         const classNameNav = cn(styles.item, {

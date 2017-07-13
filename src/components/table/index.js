@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import HiddenHeader from '../../components/table/hidden-header';
 import Header from '../../components/table/header';
 
@@ -40,17 +41,14 @@ class Table extends Component {
     };
 
     render() {
-        const { title, tHead, children, pagination } = this.props;
+        const { title, tHead, children } = this.props;
         const { columnsWidth, scrollLeft } = this.state;
         return (
             <div onScroll={this.onBodyScroll} className={styles.tableContainer}>
-                <div className={styles.titleBlock}>
-                    {title &&
-                        <h2 className={styles.title}>
-                            {title}
-                        </h2>}
-                    {pagination && pagination}
-                </div>
+                {title &&
+                    <h2 className={styles.title}>
+                        {title}
+                    </h2>}
                 <Header
                     scrollLeft={scrollLeft}
                     tHead={tHead}

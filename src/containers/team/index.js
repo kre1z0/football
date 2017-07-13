@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Block from '../../components/block';
 import { getTeamPlayers } from '../../ducks/api';
 import PlayerItem from '../../components/player/player-item';
 import Table from '../../components/table';
@@ -25,20 +26,22 @@ class Team extends Component {
     render() {
         const { players, loading, count, teamName } = this.props;
         return (
-            <Table loading={loading} title={teamName} tHead={headers}>
-                {count === 0
-                    ? <tr>
-                          <td colSpan={headers.length}>
-                              <div className={styles.noPlayers}>
-                                  no players data for this team...
-                              </div>
-                          </td>
-                      </tr>
-                    : players &&
-                      players.map(player =>
-                          <PlayerItem key={player.name} player={player} />,
-                      )}
-            </Table>
+            <Block style={{ height: '100%' }}>
+                <Table loading={loading} title={teamName} tHead={headers}>
+                    {count === 0
+                        ? <tr>
+                              <td colSpan={headers.length}>
+                                  <div className={styles.noPlayers}>
+                                      no players data for this team...
+                                  </div>
+                              </td>
+                          </tr>
+                        : players &&
+                          players.map(player =>
+                              <PlayerItem key={player.name} player={player} />,
+                          )}
+                </Table>
+            </Block>
         );
     }
 }

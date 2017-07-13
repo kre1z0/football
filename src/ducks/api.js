@@ -60,16 +60,40 @@ const fetchLeagueTableStart = createAction('api/fetch-league-table-start');
 const fetchLeagueTableSuccess = createAction('api/fetch-league-table-success');
 const fetchLeagueTableError = createAction('api/fetch-league-table-error');
 
-export const getTableFromLeague = (id, params) => dispatch => {
-    dispatch(fetchLeagueTableStart());
+export const getTableFromLeague = (id, params) => {
     const url = `${apiURL}competitions/${id}/leagueTable${getQuery(params)}`;
     return fetch(url, { headers })
         .then(response => response.json())
-        .then(response => {
-            if (response.error) dispatch(fetchLeagueTableError(response.error));
-            else {
-                response.id = id;
-                dispatch(fetchLeagueTableSuccess(response));
+        .then(response => response)
+        .catch(error => error);
+};
+
+export const getLeagueRound = (id, params) => {
+    const url = `${apiURL}competitions/${id}/fixtures${getQuery(params)}`;
+    return fetch(url, { headers })
+        .then(response => response.json())
+        .then(response => response)
+        .catch(error => error);
+};
+
+export const getLeague = (id, params) => dispatch => {
+    dispatch(fetchLeagueTableStart());
+    return Promise.all([
+        getTableFromLeague(id, params),
+        getLeagueRound(id, params),
+    ])
+        .then(([competition, fixtures]) => {
+            if (competition.error || fixtures.error) {
+                dispatch(
+                    fetchLeagueTableError(competition.error || fixtures.error),
+                );
+            } else {
+                dispatch(
+                    fetchLeagueTableSuccess({
+                        ...competition,
+                        ...fixtures,
+                    }),
+                );
             }
         })
         .catch(error => dispatch(fetchLeagueTableError(error)));
@@ -101,18 +125,6 @@ export const getTeamPlayers = id => (dispatch, getState) => {
 const fetchLeagueRoundStart = createAction('api/fetch-league-round-start');
 const fetchLeagueRoundSuccess = createAction('api/fetch-league-round-success');
 const fetchLeagueRoundError = createAction('api/fetch-league-round-error');
-
-export const getLeagueRound = (id, params) => dispatch => {
-    dispatch(fetchLeagueRoundStart());
-    const url = `${apiURL}competitions/${id}/fixtures${getQuery(params)}`;
-    return fetch(url, { headers })
-        .then(response => response.json())
-        .then(response => {
-            if (response.error) dispatch(fetchLeagueRoundError(response.error));
-            else dispatch(fetchLeagueRoundSuccess(response));
-        })
-        .catch(error => dispatch(fetchLeagueRoundError(error)));
-};
 
 export default createReducer(
     {
