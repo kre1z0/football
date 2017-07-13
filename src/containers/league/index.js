@@ -10,6 +10,7 @@ import Pagination from '../../components/pagination';
 import TeamItem from '../../components/team/team-item';
 import FixturesItem from '../../components/fixtures/fixtures-item';
 import Block from '../../components/block';
+import Loader from '../../components/loader';
 
 import styles from './league.scss';
 
@@ -56,7 +57,12 @@ class League extends Component {
             (_, index) => index + 1,
         );
         return (
-            <Block>
+            <Block style={{ marginBottom: 20 }}>
+                <Helmet>
+                    <title>
+                        {leagueCaption}
+                    </title>
+                </Helmet>
                 <div className={styles.leagueContainer}>
                     <div className={styles.title}>
                         {leagueCaption}
@@ -68,30 +74,29 @@ class League extends Component {
                         leagueId={leagueId}
                         items={rounds}
                     />
-                    <div className={styles.fixtures}>
-                        {fixtures &&
-                            fixtures.map(item =>
-                                <FixturesItem
-                                    key={item.homeTeamName}
-                                    fixture={item}
-                                />,
-                            )}
-                    </div>
-                    <Table loading={loading} tHead={headers}>
-                        <Helmet>
-                            <title>
-                                {leagueCaption}
-                            </title>
-                        </Helmet>
-                        {standing &&
-                            standing.map(team =>
-                                <TeamItem
-                                    team={team}
-                                    goTeam={goTeam}
-                                    key={team.teamName}
-                                />,
-                            )}
-                    </Table>
+                    {loading
+                        ? <Loader />
+                        : <div>
+                              <div className={styles.fixtures}>
+                                  {fixtures &&
+                                      fixtures.map(item =>
+                                          <FixturesItem
+                                              key={item.homeTeamName}
+                                              fixture={item}
+                                          />,
+                                      )}
+                              </div>
+                              <Table loading={loading} tHead={headers}>
+                                  {standing &&
+                                      standing.map(team =>
+                                          <TeamItem
+                                              team={team}
+                                              goTeam={goTeam}
+                                              key={team.teamName}
+                                          />,
+                                      )}
+                              </Table>
+                          </div>}
                 </div>
             </Block>
         );

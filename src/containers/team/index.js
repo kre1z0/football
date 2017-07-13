@@ -24,10 +24,10 @@ class Team extends Component {
     }
 
     render() {
-        const { players, loading, count, teamName } = this.props;
+        const { players, count, teamName } = this.props;
         return (
             <Block style={{ height: '100%' }}>
-                <Table loading={loading} title={teamName} tHead={headers}>
+                <Table title={teamName} tHead={headers}>
                     {count === 0
                         ? <tr>
                               <td colSpan={headers.length}>
@@ -55,7 +55,6 @@ const mapProps = (
     return {
         teamName,
         count,
-        loading,
         teamId,
         players,
     };
