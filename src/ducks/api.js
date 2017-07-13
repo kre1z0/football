@@ -4,7 +4,6 @@ import { Record } from 'immutable';
 
 const apiState = Record({
     league: undefined,
-    teams: undefined,
     leagueTable: undefined,
     error: undefined,
     loading: undefined,
@@ -15,7 +14,6 @@ const apiState = Record({
 
 const initState = new apiState({
     league: [],
-    teams: {},
     leagueTable: {},
     error: false,
     loading: false,
@@ -38,22 +36,6 @@ export const getCompetition = (params = {}, season) => dispatch => {
             else dispatch(fetchLeagueSuccess(response));
         })
         .catch(({ message }) => dispatch(fetchLeagueError(message)));
-};
-
-const fetchTeamsStart = createAction('api/fetch-teams-start');
-const fetchTeamsSuccess = createAction('api/fetch-teams-success');
-const fetchTeamsError = createAction('api/fetch-teams-error');
-
-export const getAllTeamsFromLeague = id => dispatch => {
-    dispatch(fetchTeamsStart());
-    const url = `${apiURL}teams/${id}/players`;
-    return fetch(url, { headers })
-        .then(response => response.json())
-        .then(response => {
-            if (response.error) dispatch(fetchTeamsError(response.error));
-            else dispatch(fetchTeamsSuccess(response));
-        })
-        .catch(error => dispatch(fetchTeamsError(error)));
 };
 
 const fetchLeagueTableStart = createAction('api/fetch-league-table-start');
@@ -122,10 +104,6 @@ export const getTeamPlayers = id => (dispatch, getState) => {
     }
 };
 
-const fetchLeagueRoundStart = createAction('api/fetch-league-round-start');
-const fetchLeagueRoundSuccess = createAction('api/fetch-league-round-success');
-const fetchLeagueRoundError = createAction('api/fetch-league-round-error');
-
 export default createReducer(
     {
         [fetchLeagueStart]: (state, payload) =>
@@ -136,14 +114,6 @@ export default createReducer(
                 .set('error', false)
                 .set('league', payload),
         [fetchLeagueError]: (state, payload) => state.set('error', payload),
-
-        [fetchTeamsStart]: (state, payload) => state.set('loading', true),
-        [fetchTeamsSuccess]: (state, payload) =>
-            state
-                .set('loading', false)
-                .set('error', false)
-                .set('teams', payload),
-        [fetchTeamsError]: (state, payload) => state.set('error', payload),
 
         [fetchLeagueTableStart]: (state, payload) => state.set('loading', true),
         [fetchLeagueTableSuccess]: (state, payload) =>
@@ -161,15 +131,6 @@ export default createReducer(
                 .set('error', false)
                 .set('players', payload),
         [fetchTeamPlayersError]: (state, payload) =>
-            state.set('error', payload),
-
-        [fetchLeagueRoundStart]: (state, payload) => state.set('loading', true),
-        [fetchLeagueRoundSuccess]: (state, payload) =>
-            state
-                .set('loading', false)
-                .set('error', false)
-                .set('rounds', payload),
-        [fetchLeagueRoundError]: (state, payload) =>
             state.set('error', payload),
     },
     initState,
