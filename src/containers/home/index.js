@@ -9,10 +9,10 @@ import League from '../../components/league';
 
 class Home extends Component {
     componentDidMount() {
-        const { getCompetition, season } = this.props;
-        getCompetition && getCompetition({ season: season }, season);
+        const { getCompetition, season, league } = this.props;
+        const id = league[0] && league[0].id;
+        getCompetition && getCompetition({ season: season }, season, id);
     }
-
     render() {
         const { league, loading } = this.props;
         return (

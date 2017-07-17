@@ -26,16 +26,24 @@ const fetchLeagueStart = createAction('api/fetch-league-start');
 const fetchLeagueSuccess = createAction('api/fetch-league-success');
 const fetchLeagueError = createAction('api/fetch-league-error');
 
-export const getCompetition = (params = {}, season) => dispatch => {
-    dispatch(fetchLeagueStart(season));
-    const url = `${apiURL}competitions${getQuery(params)}`;
-    return fetch(url, { headers })
-        .then(response => response.json())
-        .then(response => {
-            if (response.error) dispatch(fetchLeagueError(response.error));
-            else dispatch(fetchLeagueSuccess(response));
-        })
-        .catch(({ message }) => dispatch(fetchLeagueError(message)));
+export const getCompetition = (params = {}, season, id) => (
+    dispatch,
+    getState,
+) => {
+    const { api: { league } } = getState();
+    const idFromState = league[0] && league[0].id;
+    console.log('-->', id, idFromState);
+    if (id === undefined || idFromState === undefined || id !== idFromState) {
+        dispatch(fetchLeagueStart(season));
+        const url = `${apiURL}competitions${getQuery(params)}`;
+        return fetch(url, { headers })
+            .then(response => response.json())
+            .then(response => {
+                if (response.error) dispatch(fetchLeagueError(response.error));
+                else dispatch(fetchLeagueSuccess(response));
+            })
+            .catch(({ message }) => dispatch(fetchLeagueError(message)));
+    }
 };
 
 const fetchLeagueTableStart = createAction('api/fetch-league-table-start');
